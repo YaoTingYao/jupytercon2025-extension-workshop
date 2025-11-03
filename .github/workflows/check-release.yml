@@ -26,5 +26,5 @@ jobs:
       - name: Upload Distributions
         uses: actions/upload-artifact@v4
         with:
-          name: jupytercon2025-releaser-dist-${{ github.run_number }}
+          name: jupytercon2025_extension_workshop-releaser-dist-${{ github.run_number }}
           path: .jupyter_releaser_checkout/dist

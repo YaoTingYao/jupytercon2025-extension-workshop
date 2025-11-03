@@ -1,7 +1,7 @@
 {
-    "name": "jupytercon2025",
+    "name": "jupytercon2025-extension-workshop",
     "version": "0.1.0",
-    "description": "A JupyterLab extension.",
+    "description": "A JupyterLab extension that displays a random image and caption.",
     "keywords": [
         "jupyter",
         "jupyterlab",
@@ -38,7 +38,7 @@
         "clean": "jlpm clean:lib",
         "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
         "clean:lintcache": "rimraf .eslintcache .stylelintcache",
-        "clean:labextension": "rimraf jupytercon2025/labextension jupytercon2025/_version.py",
+        "clean:labextension": "rimraf jupytercon2025_extension_workshop/labextension jupytercon2025_extension_workshop/_version.py",
         "clean:all": "jlpm clean:lib && jlpm clean:labextension && jlpm clean:lintcache",
         "eslint": "jlpm eslint:check --fix",
         "eslint:check": "eslint . --cache --ext .ts,.tsx",
@@ -103,12 +103,12 @@
                     "pip"
                 ],
                 "base": {
-                    "name": "jupytercon2025"
+                    "name": "jupytercon2025_extension_workshop"
                 }
             }
         },
         "extension": true,
-        "outputDir": "jupytercon2025/labextension"
+        "outputDir": "jupytercon2025_extension_workshop/labextension"
     },
     "eslintIgnore": [
         "node_modules",

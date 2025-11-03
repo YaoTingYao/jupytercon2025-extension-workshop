@@ -3,7 +3,7 @@ requires = ["hatchling>=1.5.0", "jupyterlab>=4.0.0,<5", "hatch-nodejs-version>=0
 build-backend = "hatchling.build"
 
 [project]
-name = "jupytercon2025"
+name = "jupytercon2025_extension_workshop"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
@@ -46,25 +46,25 @@ source = "nodejs"
 fields = ["description", "authors", "urls", "keywords"]
 
 [tool.hatch.build.targets.sdist]
-artifacts = ["jupytercon2025/labextension"]
+artifacts = ["jupytercon2025_extension_workshop/labextension"]
 exclude = [".github", "binder"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"jupytercon2025/labextension" = "share/jupyter/labextensions/jupytercon2025"
-"install.json" = "share/jupyter/labextensions/jupytercon2025/install.json"
+"jupytercon2025_extension_workshop/labextension" = "share/jupyter/labextensions/jupytercon2025-extension-workshop"
+"install.json" = "share/jupyter/labextensions/jupytercon2025-extension-workshop/install.json"
 "jupyter-config/server-config" = "etc/jupyter/jupyter_server_config.d"
 
 [tool.hatch.build.hooks.version]
-path = "jupytercon2025/_version.py"
+path = "jupytercon2025_extension_workshop/_version.py"
 
 [tool.hatch.build.hooks.jupyter-builder]
 dependencies = ["hatch-jupyter-builder>=0.5"]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "jupytercon2025/labextension/static/style.js",
-    "jupytercon2025/labextension/package.json",
+    "jupytercon2025_extension_workshop/labextension/static/style.js",
+    "jupytercon2025_extension_workshop/labextension/package.json",
 ]
-skip-if-exists = ["jupytercon2025/labextension/static/style.js"]
+skip-if-exists = ["jupytercon2025_extension_workshop/labextension/static/style.js"]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"
@@ -74,7 +74,7 @@ npm = ["jlpm"]
 build_cmd = "install:extension"
 npm = ["jlpm"]
 source_dir = "src"
-build_dir = "jupytercon2025/labextension"
+build_dir = "jupytercon2025_extension_workshop/labextension"
 
 [tool.jupyter-releaser.options]
 version_cmd = "hatch version"

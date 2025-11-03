@@ -7,9 +7,9 @@ node_modules/
 *.egg-info/
 .ipynb_checkpoints
 *.tsbuildinfo
-jupytercon2025/labextension
+jupytercon2025_extension_workshop/labextension
 # Version file is handled by hatchling
-jupytercon2025/_version.py
+jupytercon2025_extension_workshop/_version.py
 
 # Integration tests
 ui-tests/test-results/

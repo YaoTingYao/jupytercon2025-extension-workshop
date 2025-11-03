@@ -1,7 +1,7 @@
 {
-  "name": "jupytercon2025-ui-tests",
+  "name": "jupytercon2025-extension-workshop-ui-tests",
   "version": "1.0.0",
-  "description": "JupyterLab jupytercon2025 Integration Tests",
+  "description": "JupyterLab jupytercon2025-extension-workshop Integration Tests",
   "private": true,
   "scripts": {
     "start": "jupyter lab --config jupyter_server_test_config.py",

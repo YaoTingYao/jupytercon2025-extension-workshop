@@ -110,17 +110,17 @@ npx tsc --noEmit src/index.ts  # Check single file
 npx tsc --noEmit               # Check all files
 ```
 
-After editing Python files (like `jupytercon2025/routes.py`):
+After editing Python files (like `jupytercon2025_extension_workshop/routes.py`):
 
 ```bash
-python -m py_compile jupytercon2025/__init__.py  # Check single file for syntax errors
+python -m py_compile jupytercon2025_extension_workshop/__init__.py  # Check single file for syntax errors
 ```
 
 ## Coding Standards
 
 ### Naming Conventions
 
-**Python** (in `jupytercon2025/*.py` files):
+**Python** (in `jupytercon2025_extension_workshop/*.py` files):
 
 - **✅ Do**: Use PEP 8 style with 4-space indentation
   - Classes: `DataProcessor`, `UserDataRouteHandler`
@@ -155,7 +155,7 @@ function activate(app: JupyterFrontEnd): void {}
 
 **✅ Do**: Keep backend and frontend logic separate
 
-- Backend processing in `jupytercon2025/routes.py`
+- Backend processing in `jupytercon2025_extension_workshop/routes.py`
 - Frontend calls in `src/request.ts` using `requestAPI()`
 
 **❌ Don't**: Duplicate business logic across TypeScript and Python
@@ -170,7 +170,7 @@ function activate(app: JupyterFrontEnd): void {}
 
 **Python package** (directory name and imports):
 
-- **✅ Do**: `jupytercon2025/` with underscores, all lowercase
+- **✅ Do**: `jupytercon2025_extension_workshop/` with underscores, all lowercase
 - **❌ Don't**: Use dashes in any Python file or directory names
 
 **PyPI distribution name** (in `pyproject.toml`):
@@ -188,7 +188,7 @@ function activate(app: JupyterFrontEnd): void {}
 **✅ Do**: Define plugin ID in `src/index.ts`:
 
 ```typescript
-const PLUGIN_ID = 'jupytercon2025:plugin';
+const PLUGIN_ID = 'jupytercon2025_extension_workshop:plugin';
 ```
 
 **✅ Do**: For extensions with multiple commands, create a `src/commands.ts` module to centralize command definitions:
@@ -200,8 +200,8 @@ import { ReadonlyPartialJSONObject } from '@lumino/coreutils';
 
 // Command IDs
 export namespace CommandIDs {
-  export const openPanel = 'jupytercon2025:open-panel';
-  export const refreshData = 'jupytercon2025:refresh-data';
+  export const openPanel = 'jupytercon2025_extension_workshop:open-panel';
+  export const refreshData = 'jupytercon2025_extension_workshop:refresh-data';
 }
 
 // Command argument types
@@ -251,7 +251,7 @@ import {
 import { registerCommands, CommandIDs, CommandArguments } from './commands';
 
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'jupytercon2025:plugin',
+  id: 'jupytercon2025_extension_workshop:plugin',
   autoStart: true,
   activate: (app: JupyterFrontEnd) => {
     // Register all commands with JupyterLab's command registry
@@ -301,9 +301,9 @@ await app.commands.execute(CommandIDs.refreshData);
 - Widget components: `src/widgets/DataPanel.tsx` (class `DataPanel`)
 - Command definitions (for multiple commands): `src/commands.ts` with `COMMANDS` mapping
 - API utilities: `src/api.ts` (not `src/utils.ts`)
-- Backend routes: `jupytercon2025/routes.py` (class `DataRouteHandler`)
+- Backend routes: `jupytercon2025_extension_workshop/routes.py` (class `DataRouteHandler`)
 - Frontend logic: `src/` directory
-- Python package: `jupytercon2025/` directory
+- Python package: `jupytercon2025_extension_workshop/` directory
 
 **❌ Don't**: Create catch-all files or directories like `utils.ts` or `helpers.py` or `handlers.py` — partition by feature instead
 
@@ -313,7 +313,7 @@ await app.commands.execute(CommandIDs.refreshData);
 
 When connecting frontend and backend, **ALWAYS follow this order**:
 
-1. **Read the backend first** — Check `jupytercon2025/routes.py` to understand the existing API contract
+1. **Read the backend first** — Check `jupytercon2025_extension_workshop/routes.py` to understand the existing API contract
 2. **Write frontend to match** — Create TypeScript interfaces in `src/api.ts` that match backend responses exactly
 3. **Or modify backend intentionally** — If changing the backend, update it first, then write matching frontend code
 
@@ -321,7 +321,7 @@ When connecting frontend and backend, **ALWAYS follow this order**:
 
 ### Backend Routes
 
-Create RESTful endpoints in `jupytercon2025/routes.py`:
+Create RESTful endpoints in `jupytercon2025_extension_workshop/routes.py`:
 
 **✅ Do**: Extend `APIHandler` from `jupyter_server.base.handlers`
 
@@ -343,7 +343,7 @@ class DataRouteHandler(APIHandler):
 
 def setup_route_handlers(web_app):
     base_url = web_app.settings.get("base_url", "/")
-    data_route = url_path_join(base_url, "jupytercon2025", "data")
+    data_route = url_path_join(base_url, "jupytercon2025_extension_workshop", "data")
     web_app.add_handlers(r".*$", [(data_route, DataRouteHandler)])
 ```
 
@@ -414,7 +414,7 @@ export async function fetchData(): Promise<string> {
 
 - Match JSON keys: `{"result": ...}` in Python → `response.result` in TypeScript
 - Update TypeScript interfaces when changing Python responses
-- Define matching endpoint path strings (e.g., `"hello"`, `"get-data"`) in both `jupytercon2025/routes.py` and `src/api.ts` to ensure routes sync between backend and frontend
+- Define matching endpoint path strings (e.g., `"hello"`, `"get-data"`) in both `jupytercon2025_extension_workshop/routes.py` and `src/api.ts` to ensure routes sync between backend and frontend
 
 **❌ Don't**:
 
@@ -454,7 +454,7 @@ source <path-to-venv>/bin/activate  # On macOS/Linux
 **When implementing a new feature from scratch, follow this complete sequence:**
 
 1. **Activate environment** (see above — required first!)
-2. **Write the code** (TypeScript in `src/`, styles in `style/`, Python in `jupytercon2025/`)
+2. **Write the code** (TypeScript in `src/`, styles in `style/`, Python in `jupytercon2025_extension_workshop/`)
 3. **Install dependencies** (if you added any to `package.json`):
    ```bash
    jlpm install
@@ -467,7 +467,7 @@ source <path-to-venv>/bin/activate  # On macOS/Linux
    ```bash
    pip install -e .
    jupyter labextension develop . --overwrite
-   jupyter server extension enable jupytercon2025
+   jupyter server extension enable jupytercon2025_extension_workshop
    ```
 6. **Verify installation**:
    ```bash
@@ -491,7 +491,7 @@ Many issues arise from confusing these two steps:
 #### `jlpm build` — Compiles the Extension. Do this every time you change TypeScript code.
 
 - **What it does**: Compiles TypeScript → JavaScript, bundles the extension
-- **Output**: Creates files in `lib/` and `jupytercon2025/labextension/`
+- **Output**: Creates files in `lib/` and `jupytercon2025_extension_workshop/labextension/`
 - **What it does NOT do**: Register the extension with JupyterLab
 
 #### `pip install -e .` + `jupyter labextension develop .` — Registers the Extension. Do this once as a setup step.
@@ -512,7 +512,7 @@ Many issues arise from confusing these two steps:
 ```bash
 pip install -e ".[dev,test]"
 jupyter labextension develop . --overwrite
-jupyter server extension enable jupytercon2025
+jupyter server extension enable jupytercon2025_extension_workshop
 ```
 
 ### Iterative Development
@@ -536,7 +536,7 @@ jupyter lab
 npx tsc --noEmit src/index.ts       # Check single file
 ```
 
-**After editing Python** (files in `jupytercon2025/`):
+**After editing Python** (files in `jupytercon2025_extension_workshop/`):
 
 - **Restart the JupyterLab server** (Ctrl+C in terminal, then `jupyter lab` again)
 - No rebuild needed!
@@ -587,7 +587,7 @@ Your extension should appear as **"enabled"** and **"OK"**.
 ```bash
 pip install -e .
 jupyter labextension develop . --overwrite
-jupyter server extension enable jupytercon2025
+jupyter server extension enable jupytercon2025_extension_workshop
 ```
 
 **3. Did you restart JupyterLab?**
@@ -598,14 +598,14 @@ jupyter server extension enable jupytercon2025
 **4. Ask user to check the browser console** (F12 or Cmd+Option+I):
 
 - Request user to look for JavaScript errors that might prevent extension activation
-- Ask user to search for the extension ID (`jupytercon2025`) to see if it loaded
+- Ask user to search for the extension ID (`jupytercon2025_extension_workshop`) to see if it loaded
 - Ask user to report any error messages or warnings
 
 **5. Verify the build output:**
 
 ```bash
 ls -la lib/                          # Should contain compiled .js files
-ls -la jupytercon2025/labextension/  # Should contain bundled extension
+ls -la jupytercon2025_extension_workshop/labextension/  # Should contain bundled extension
 ```
 
 **6. If still not working**, try a clean rebuild following the reset instructions below
@@ -626,7 +626,7 @@ jlpm install         # Only needed if you used 'git clean -fdX'
 jlpm build
 pip install -e ".[dev,test]"
 jupyter labextension develop . --overwrite
-jupyter server extension enable jupytercon2025
+jupyter server extension enable jupytercon2025_extension_workshop
 ```
 
 ### Environment Notes
@@ -643,8 +643,8 @@ jupyter server extension enable jupytercon2025
 **✅ Do**: Follow the template structure
 
 - Keep configuration files in project root: `package.json`, `pyproject.toml`, `tsconfig.json`
-- Backend routes: `jupytercon2025/routes.py`
-- Server extension config: `jupyter-config/server-config/jupytercon2025.json`
+- Backend routes: `jupytercon2025_extension_workshop/routes.py`
+- Server extension config: `jupyter-config/server-config/jupytercon2025_extension_workshop.json`
 - Frontend code: `src/index.ts` and other `src/` files
 - Styles: `style/index.css`
 
@@ -674,7 +674,7 @@ jupyter server extension enable jupytercon2025
 
 **❌ Don't**: Build complex features without incremental testing
 
-**❌ Don't**: Write frontend interfaces without first checking the backend API contract in `jupytercon2025/routes.py`
+**❌ Don't**: Write frontend interfaces without first checking the backend API contract in `jupytercon2025_extension_workshop/routes.py`
 
 ## Common Pitfalls
 
@@ -721,7 +721,7 @@ try {
 **✅ Do**: Namespace all CSS in `style/index.css`
 
 ```css
-.jp-jupytercon2025-widget {
+.jp-jupytercon2025-extension-workshop-widget {
   padding: 8px;
 }
 ```
@@ -749,7 +749,7 @@ dispose(): void {
 from .routes import setup_route_handlers
 ```
 
-**❌ Don't**: Use absolute imports like `from jupytercon2025.routes import ...`
+**❌ Don't**: Use absolute imports like `from jupytercon2025_extension_workshop.routes import ...`
 
 ## Quick Reference
 
@@ -757,12 +757,12 @@ from .routes import setup_route_handlers
 
 Use these patterns consistently throughout your code:
 
-- **Plugin ID** (in `src/index.ts`): `'jupytercon2025:plugin'`
-- **Command IDs** (in `src/commands.ts` or `src/index.ts`): `'jupytercon2025:command-name'`
+- **Plugin ID** (in `src/index.ts`): `'jupytercon2025_extension_workshop:plugin'`
+- **Command IDs** (in `src/commands.ts` or `src/index.ts`): `'jupytercon2025_extension_workshop:command-name'`
   - For multiple commands, create `src/commands.ts` with a centralized `COMMANDS` mapping
   - For 1-2 commands, define directly in `src/index.ts`
-- **CSS classes** (in `style/index.css`): `.jp-jupytercon2025-ClassName`
-- **API routes** (in `jupytercon2025/routes.py`): `url_path_join(base_url, "jupytercon2025", "endpoint")`
+- **CSS classes** (in `style/index.css`): `.jp-jupytercon2025-extension-workshop-ClassName`
+- **API routes** (in `jupytercon2025_extension_workshop/routes.py`): `url_path_join(base_url, "jupytercon2025_extension_workshop", "endpoint")`
 
 ### Essential Commands
 

@@ -6,14 +6,14 @@ import {
 import { requestAPI } from './request';
 
 /**
- * Initialization data for the jupytercon2025 extension.
+ * Initialization data for the jupytercon2025-extension-workshop extension.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'jupytercon2025:plugin',
-  description: 'A JupyterLab extension.',
+  id: 'jupytercon2025-extension-workshop:plugin',
+  description: 'A JupyterLab extension that displays a random image and caption.',
   autoStart: true,
   activate: (app: JupyterFrontEnd) => {
-    console.log('JupyterLab extension jupytercon2025 is activated!');
+    console.log('JupyterLab extension jupytercon2025-extension-workshop is activated!');
 
     requestAPI<any>('hello')
       .then(data => {
@@ -21,7 +21,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       })
       .catch(reason => {
         console.error(
-          `The jupytercon2025 server extension appears to be missing.\n${reason}`
+          `The jupytercon2025_extension_workshop server extension appears to be missing.\n${reason}`
         );
       });
   }
