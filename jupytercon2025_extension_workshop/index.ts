@@ -2,6 +2,7 @@ import { requestAPI } from './request';
 import { ILauncher } from '@jupyterlab/launcher'
 import { ImageCaptionMainAreaWidget } from './widget';
 import { imageIcon } from '@jupyterlab/ui-components';
+import { ILauncher } from '@jupyterlab/launcher'
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
