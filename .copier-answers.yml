@@ -1,0 +1,17 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.5.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: leannayao@gmail.com
+author_name: yayao
+create_claude_symlink: true
+create_gemini_symlink: true
+has_ai_rules: true
+has_binder: false
+has_settings: false
+kind: frontend-and-server
+labextension_name: jupytercon2025
+project_short_description: A JupyterLab extension.
+python_name: jupytercon2025
+repository: https://github.com/YaoTingYao/jupytercon2025-extension-workshop
+test: true
+
